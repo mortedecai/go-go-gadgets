@@ -1,0 +1,51 @@
+name: CI / CD workflow
+concurrency:
+  group: ${{ github.head_ref || github.run_id }}
+  cancel-in-progress: true
+on:
+  workflow_dispatch:
+  push:
+    branches:
+      - master
+  pull_request:
+    types: [opened, synchronize, reopened]
+jobs:
+  cicd:
+    name: Source Build And Test
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v2
+        with:
+          fetch-depth: 0
+      - name: Set up Go 1.18.4
+        uses: actions/setup-go@v3.2.1
+        with:
+          go-version-file: "go.mod"
+      - name: Install Tools & Dependencies
+        run: make setupTools
+      - name: Generate Reports
+        run: make full
+      - name: Upload Reports
+        uses: actions/upload-artifact@v3
+        with:
+          name: go-go-gadget-coverage-cli
+          path: .reports/*
+      - name: SonarCloud Scan
+        uses: SonarSource/sonarcloud-github-action@master
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }} # Needed to get PR information, if any
+          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+        with:
+          args: >
+            -Dsonar.projectKey=mortedecai_go-go-gadgets
+            -Dsonar.organization=mortedecai
+            -Dsonar.projectVersion=0.1.0-alpha
+            -Dsonar.sourceEncoding=UTF-8
+            -Dsonar.sources=.
+            -Dsonar.exclusions=**/*_test.go,**/vendor/**,**/testing/cmd/**/*.go
+            -Dsonar.tests=.
+            -Dsonar.test.exclusions=**/vendor/**
+            -Dsonar.test.inclusions=**/*_test.go
+            -Dsonar.go.coverage.reportPaths=.reports/coverage.out
+            -Dsonar.go.tests.reportPaths=.reports/test.json
