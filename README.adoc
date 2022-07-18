@@ -9,7 +9,8 @@
 :uri-analysis: https://sonarcloud.io/summary/new_code?id={sonar-project-id}
 
 # go-go-gadets
-Simple golang functions, etc. I find useful and don't want to keep re-writing.
+
+Simple golang functions, etc. that I find useful and don't want to keep re-writing.
 
 [.text-center]
 image:{img-quality-gate}[Quality Gate,link={uri-analysis}]
@@ -19,3 +20,7 @@ image:{img-coverage}[Coverage,link={uri-analysis}]
 image:{img-maintainability}[Maintainability,link={uri-analysis}]
 image:{img-reliability}[Reliability,link={uri-analysis}]
 image:{img-security-rating}[Security Rating,link={uri-analysis}]
+
+## Environment Manipulation
+
+* `env/GetWithDefault(key, defVal string) (val string, found bool)`
