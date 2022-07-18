@@ -36,7 +36,7 @@ setupTools:
 	@echo "Tools:"
 	@echo "* staticcheck v2022.1.2"
 	@go install honnef.co/go/tools/cmd/staticcheck@2022.1.2
-    @go mod vendor
+	@go mod vendor
 
 .PHONY: coverage
 coverage: $(COVERAGE_FILE) htmlCoverage funcCoverage
