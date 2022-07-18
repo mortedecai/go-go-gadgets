@@ -1,9 +1,10 @@
 GO_TOOL		?= go
+GO_PKG ?= ./...
 REPORTS_DIR ?= .reports
 COVERAGE_FILE_NAME ?= coverage
 COVERAGE_FILE ?= $(REPORTS_DIR)/$(COVERAGE_FILE_NAME).out
 COVERAGE_FLAG ?= -coverprofile=$(COVERAGE_FILE)
-TEST_PKG ?= ./...
+TEST_PKG ?= $(GO_PKG)
 FORMAT_FLAG ?= -json
 
 TEST_CMD	?= test $(FORMAT_FLAG) $(COVERAGE_FLAG) $(TEST_PKG)
@@ -48,12 +49,20 @@ $(COVERAGE_FILE):
 	$(GO_TOOL) $(TEST_CMD) > $(RESULTS_JSON)
 
 .PHONY: staticChecks
-staticChecks: staticCheck
+staticChecks: format staticCheck vet
+
+.PHONY: vet
+vet:
+	@$(GO_TOOL) vet $(FORMAT_FLAG) $(GO_PKG) > $(REPORTS_DIR)/vet.json
+
+.PHONY: format
+format:
+	@$(GO_TOOL) fmt $(GO_PKG)
 
 .PHONY: staticCheck
 staticCheck:
-	@staticcheck -f stylish ./... > $(STATIC_CHECK_REPORT_TEXT)
-	@staticcheck -f json ./... > $(STATIC_CHECK_REPORT_JSON)
+	@staticcheck -f stylish $(GO_PKG) > $(STATIC_CHECK_REPORT_TEXT)
+	@staticcheck -f json $(GO_PKG) > $(STATIC_CHECK_REPORT_JSON)
 
 htmlCoverage: $(COVERAGE_FILE)
 	$(COVER_HTML_CMD) -o $(HTML_REPORT)
