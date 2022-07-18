@@ -38,7 +38,7 @@ jobs:
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
         with:
           args: >
-            -Dsonar.projectKey=${{ secrets.SONAR_PROJECT_KEY }}
+            -Dsonar.projectKey=mortedecai_go-go-gadgets
             -Dsonar.organization=mortedecai
             -Dsonar.projectVersion=0.1.0-alpha
             -Dsonar.sourceEncoding=UTF-8
