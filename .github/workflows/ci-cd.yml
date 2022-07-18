@@ -36,3 +36,16 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }} # Needed to get PR information, if any
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+        with:
+          args: >
+            -Dsonar.projectKey=${{ secrets.SONAR_PROJECT_KEY }}
+            -Dsonar.organization=mortedecai
+            -Dsonar.projectVersion=0.1.0-alpha
+            -Dsonar.sourceEncoding=UTF-8
+            -Dsonar.sources=.
+            -Dsonar.exclusions=**/*_test.go,**/vendor/**,**/testing/cmd/**/*.go
+            -Dsonar.tests=.
+            -Dsonar.test.exclusions=**/vendor/**
+            -Dsonar.test.inclusions=**/*_test.go
+            -Dsonar.go.coverage.reportPaths=.reports/coverage.out
+            -Dsonar.go.tests.reportPaths=.reports/test.json
