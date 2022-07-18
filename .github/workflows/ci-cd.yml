@@ -23,9 +23,7 @@ jobs:
         with:
           go-version-file: "go.mod"
       - name: Install Tools & Dependencies
-        run: |
-          go install honnef.co/go/tools/cmd/staticcheck@2022.1.2
-          go mod vendor
+        run: make setupTools
       - name: Generate Reports
         run: make full
       - name: Upload Reports

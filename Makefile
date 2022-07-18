@@ -30,6 +30,14 @@ clean:
 	@rm -rf $(REPORTS_DIR)
 	@mkdir $(REPORTS_DIR)
 
+.PHONY: setupTools
+setupTools:
+	@echo "Setting up tools and vendoring dependencies"
+	@echo "Tools:"
+	@echo "* staticcheck v2022.1.2"
+	@go install honnef.co/go/tools/cmd/staticcheck@2022.1.2
+    @go mod vendor
+
 .PHONY: coverage
 coverage: $(COVERAGE_FILE) htmlCoverage funcCoverage
 
@@ -41,8 +49,8 @@ staticChecks: staticCheck
 
 .PHONY: staticCheck
 staticCheck:
-	staticCheck -f stylish ./... > $(STATIC_CHECK_REPORT_TEXT)
-	staticCheck -f json ./... > $(STATIC_CHECK_REPORT_JSON)
+	@staticcheck -f stylish ./... > $(STATIC_CHECK_REPORT_TEXT)
+	@staticcheck -f json ./... > $(STATIC_CHECK_REPORT_JSON)
 
 htmlCoverage: $(COVERAGE_FILE)
 	$(COVER_HTML_CMD) -o $(HTML_REPORT)
