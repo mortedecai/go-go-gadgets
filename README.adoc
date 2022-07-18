@@ -23,4 +23,21 @@ image:{img-security-rating}[Security Rating,link={uri-analysis}]
 
 ## Environment Manipulation
 
-* `env/GetWithDefault(key, defVal string) (val string, found bool)`
+* Get an environment value with default value
+
+```go
+import (
+    "fmt"
+    "github.com/mortedecai/go-go-gadgets/env"
+)
+
+func main() {
+    const defValue = "World"
+    const key = "HelloResponse"
+    if greeting, found := env.GetWithDefault(key, defVal string) (val string, found bool); found {
+        fmt.Printf("Hello %s! (non-default)", greeting)
+    } else {
+        fmt.Printf("Hello %s! (default)", greeting)
+    }
+}
+```
