@@ -18,6 +18,8 @@ TEXT_REPORT ?= $(REPORTS_DIR)/$(COVERAGE_FILE_NAME).txt
 STATIC_CHECK_REPORT_TEXT ?= $(REPORTS_DIR)/static-check.txt
 STATIC_CHECK_REPORT_JSON ?= $(REPORTS_DIR)/static-check.json
 
+RESULTS_JSON = $(REPORTS_DIR)/test.json
+
 SOURCE_FILES := $(shell find . -type f -name '*.go')
 
 .PHONY: all
@@ -43,7 +45,7 @@ setupTools:
 coverage: $(COVERAGE_FILE) htmlCoverage funcCoverage
 
 $(COVERAGE_FILE):
-	$(GO_TOOL) $(TEST_CMD)
+	$(GO_TOOL) $(TEST_CMD) > $(RESULTS_JSON)
 
 .PHONY: staticChecks
 staticChecks: staticCheck
