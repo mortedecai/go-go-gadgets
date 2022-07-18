@@ -14,14 +14,14 @@ jobs:
     name: Source Build And Test
     runs-on: ubuntu-latest
     steps:
-      - name: Set up Go 1.13
-        uses: actions/setup-go@v1
-        with:
-          version: 1.18.4
       - name: Checkout Code
         uses: actions/checkout@v2
         with:
           fetch-depth: 0
+      - name: Set up Go 1.18.4
+        uses: actions/setup-go@v3.2.1
+        with:
+          go-version-file: "go.mod"
       - name: Generate Reports
         run: make full
       - name: Upload Reports
