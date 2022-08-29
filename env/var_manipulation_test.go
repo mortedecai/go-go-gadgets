@@ -6,7 +6,7 @@ import (
 	. "github.com/onsi/ginkgo/v2"
 	. "github.com/onsi/gomega"
 
-	"github.com/mortedecai/go-go-gadets/env"
+	"github.com/mortedecai/go-go-gadgets/env"
 )
 
 const (
