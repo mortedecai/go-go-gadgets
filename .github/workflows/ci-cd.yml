@@ -6,7 +6,7 @@ on:
   workflow_dispatch:
   push:
     branches:
-      - master
+      - main
   pull_request:
     types: [opened, synchronize, reopened]
 jobs:
@@ -38,9 +38,9 @@ jobs:
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
         with:
           args: >
-            -Dsonar.projectKey=mortedecai_go-go-gadgets2
+            -Dsonar.projectKey=mortedecai_go-go-gadgets
             -Dsonar.organization=mortedecai
-            -Dsonar.projectVersion=0.1.0-alpha
+            -Dsonar.projectVersion=0.2.1
             -Dsonar.sourceEncoding=UTF-8
             -Dsonar.sources=.
             -Dsonar.exclusions=**/*_test.go,**/vendor/**,**/testing/cmd/**/*.go
