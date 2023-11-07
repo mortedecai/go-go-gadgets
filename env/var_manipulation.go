@@ -27,3 +27,19 @@ func GetWithDefaultInt(key string, defVal int) (val int, found bool) {
 	}
 	return
 }
+
+func GetWithDefaultBool(key string, defVal bool) (val bool, found bool) {
+	if str, f := os.LookupEnv(key); !f {
+		val = defVal
+		found = f
+	} else {
+		if v, err := strconv.ParseBool(str); err != nil {
+			val = defVal
+			found = false
+		} else {
+			val = v
+			found = f
+		}
+	}
+	return
+}
